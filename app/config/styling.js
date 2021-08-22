@@ -8,6 +8,7 @@ export const colors = {
   },
   dark: {
     dark: '#4a516c',
+    light: '#666666',
   },
   light: {
     light: '#fff',
@@ -22,6 +23,7 @@ export const layout = {
     m: 14,
     l: 16,
     xl: 18,
+    icon: 25,
   },
   spacer: {
     height: {
@@ -33,7 +35,7 @@ export const layout = {
     width: {
       small: width * 0.025,
       medium: width * 0.05,
-      large: width * 0.75,
+      large: width * 0.075,
     },
   },
 };
