@@ -82,6 +82,14 @@ export default function ChatScreen() {
       Dialogflow_V2.LANG_ENGLISH_US,
       DialogFlowConfig.project_id,
     );
+    setMessages(messages =>
+      messages.concat({
+        chatId: 1,
+        text: 'DialogFlow Command yang ada "lawak" ',
+
+        user: Bot,
+      }),
+    );
   }, []);
 
   return (
@@ -168,7 +176,7 @@ const styles = StyleSheet.create({
   flatlListContainer: {
     width: width,
     paddingHorizontal: layout.spacer.width.small,
-    // paddingBottom: 100,
+    paddingBottom: 100,
   },
 
   sendButton: opacity => ({
@@ -191,7 +199,7 @@ const styles = StyleSheet.create({
     height: height * 0.075,
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginTop: 10,
+    marginTop: 30,
   },
   textInputUnderline: {
     borderBottomWidth: 1,
