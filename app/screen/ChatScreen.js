@@ -8,9 +8,7 @@ import {
   Dimensions,
   TextInput,
   FlatList,
-  ScrollView,
   TouchableOpacity,
-  Image,
   Keyboard,
 } from 'react-native';
 import {Dialogflow_V2} from 'react-native-dialogflow';
@@ -52,13 +50,11 @@ export default function ChatScreen() {
       text: message,
       user: User,
     };
-
     Dialogflow_V2.requestQuery(
       sentMessage.text,
       result => handleDialogflow(result),
       error => console.log(error),
     );
-
     setMessages(messages => messages.concat(sentMessage));
     setMessage('');
     Keyboard.dismiss();
@@ -69,10 +65,16 @@ export default function ChatScreen() {
     let botMessage = {
       chatId: messages.length + 2,
       text: text,
-
       user: Bot,
     };
     setMessages(messages => messages.concat(botMessage));
+  };
+
+  const renderItem = ({item}) => {
+    if (item.user.id === 0) {
+      return <BotBubbles item={item} />;
+    }
+    return <UserBubbles item={item} />;
   };
 
   useEffect(() => {
@@ -124,17 +126,10 @@ export default function ChatScreen() {
             onContentSizeChange={() =>
               flatlistRef.current.scrollToEnd({animated: true})
             }
+            showsVerticalScrollIndicator={false}
             onLayout={() => flatlistRef.current.scrollToEnd({animated: true})}
             keyExtractor={item => item.chatId}
-            renderItem={({item}) => (
-              <>
-                {item.user.id === 0 ? (
-                  <BotBubbles item={item} />
-                ) : (
-                  <UserBubbles item={item} />
-                )}
-              </>
-            )}
+            renderItem={renderItem}
           />
         </LinearGradient>
         <View style={[styles.textInputContainer]}>
@@ -145,6 +140,7 @@ export default function ChatScreen() {
               placeholder={placeholder}
               value={message}
               onChangeText={text => setMessage(text)}
+              onSubmitEditing={() => handleSendChat()}
             />
             <View style={styles.textInputUnderline} />
           </View>

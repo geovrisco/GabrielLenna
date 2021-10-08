@@ -219,3 +219,12 @@ task copyDownloadableDepsToLibs(type: Copy) {
 }
 
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
+
+
+task fixReactNativeVoiceImport() {
+    def libModule = file("../../node_modules/react-native-voice/android/src/main/java/com/wenkesj/voice/VoiceModule.java")
+    def fixedText = libModule.text.replace('android.support.annotation.NonNull', 'androidx.annotation.NonNull')
+    libModule.write(fixedText)
+}
+
+preBuild.dependsOn fixReactNativeVoiceImport
